@@ -3,7 +3,8 @@ from __future__ import annotations
 import argparse
 
 from .chunking import DEFAULT_STRATEGIES, chunk_text, compare_strategies
-from .sample_data import load_sample_documents
+from .retrieval import run_retrieval_checks
+from .sample_data import load_sample_documents, load_sample_query_fixtures
 
 
 def _format_table(rows: list[dict[str, str]]) -> str:
@@ -27,6 +28,15 @@ def _format_table(rows: list[dict[str, str]]) -> str:
 def build_demo_report() -> str:
     documents = load_sample_documents()
     rows = [report.as_row() for report in compare_strategies(documents, DEFAULT_STRATEGIES)]
+    retrieval_rows = [
+        check.as_row()
+        for check in run_retrieval_checks(
+            documents,
+            load_sample_query_fixtures(),
+            strategy=DEFAULT_STRATEGIES[1],
+            top_k=3,
+        )
+    ]
     document_summary = "\n".join(
         f"- {document.doc_id}: {document.word_count} words, tags={','.join(document.tags)}"
         for document in documents
@@ -35,7 +45,9 @@ def build_demo_report() -> str:
         "RAG Lab Bench sample corpus\n"
         f"{document_summary}\n\n"
         "Chunking strategy comparison\n"
-        f"{_format_table(rows)}"
+        f"{_format_table(rows)}\n\n"
+        "Deterministic retrieval fixture checks\n"
+        f"{_format_table(retrieval_rows)}"
     )
 
 

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from .models import SourceDocument
+from .models import QueryFixture, SourceDocument
 
 
 SAMPLE_DOCUMENTS: tuple[SourceDocument, ...] = (
@@ -43,5 +43,28 @@ SAMPLE_DOCUMENTS: tuple[SourceDocument, ...] = (
 )
 
 
+SAMPLE_QUERY_FIXTURES: tuple[QueryFixture, ...] = (
+    QueryFixture(
+        query_id="ai-disclosure",
+        question="What should final submissions disclose when students use AI?",
+        expected_doc_ids=("campus-ai-policy",),
+    ),
+    QueryFixture(
+        query_id="retrieval-evidence",
+        question="Which search results should expose passage identifiers and quoted evidence?",
+        expected_doc_ids=("library-retrieval-notes",),
+    ),
+    QueryFixture(
+        query_id="full-course-backup",
+        question="What should students do when a course is full and graduation is constrained?",
+        expected_doc_ids=("student-advising-faq",),
+    ),
+)
+
+
 def load_sample_documents() -> list[SourceDocument]:
     return list(SAMPLE_DOCUMENTS)
+
+
+def load_sample_query_fixtures() -> list[QueryFixture]:
+    return list(SAMPLE_QUERY_FIXTURES)

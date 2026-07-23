@@ -1,0 +1,3 @@
+{"query_id":"ai-disclosure","question":"What should final submissions disclose when students use AI?","expected_doc_ids":["campus-ai-policy"]}
+{"query_id":"retrieval-evidence","question":"Which search results should expose passage identifiers and quoted evidence?","expected_doc_ids":["library-retrieval-notes"]}
+{"query_id":"full-course-backup","question":"What should students do when a course is full and graduation is constrained?","expected_doc_ids":["student-advising-faq"]}
